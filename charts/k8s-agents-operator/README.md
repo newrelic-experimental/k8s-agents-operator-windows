@@ -65,7 +65,7 @@ metadata:
 spec:
   agent:
     language: dotnet-windows
-    image: ghrc.io/andrew-lozoya/newrelic-dotnet-windows-init:10.32.0
+    image: ghrc.io/andrew-lozoya/newrelic-dotnet-windows-init:latest
     # env: ...
 ```
 
