@@ -55,6 +55,7 @@ spec:
     image: newrelic/newrelic-dotnet-init:latest
     # env: ...
 ```
+
 For .NET on Windows
 
 ```yaml
@@ -65,7 +66,7 @@ metadata:
 spec:
   agent:
     language: dotnet-windows
-    image: ghrc.io/andrew-lozoya/newrelic-dotnet-windows-init:latest
+    image: ghrc.io/newrelic-experimental/newrelic-dotnet-windows-init:latest
     # env: ...
 ```
 
