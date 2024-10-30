@@ -37,7 +37,6 @@ For each `Instrumentation` custom resource created, specifying which APM agent y
  agent docker images and corresponding tags are listed on DockerHub:
 
 * [.NET](https://hub.docker.com/repository/docker/newrelic/newrelic-dotnet-init/general)
-* [.NET Windows](https://github.com/newrelic-experimental/k8s-agents-operator-windows/pkgs/container/k8s-agents-operator-windows%2Fnewrelic-dotnet-init-windows)
 * [Java](https://hub.docker.com/repository/docker/newrelic/newrelic-java-init/general)
 * [Node](https://hub.docker.com/repository/docker/newrelic/newrelic-node-init/general)
 * [Python](https://hub.docker.com/repository/docker/newrelic/newrelic-python-init/general)
