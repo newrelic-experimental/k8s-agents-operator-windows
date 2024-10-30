@@ -259,8 +259,8 @@ If you want to see a list of all available charts and releases, check [index.yam
 | controllerManager.kubeRbacProxy.resources.requests.cpu | string | `"5m"` |  |
 | controllerManager.kubeRbacProxy.resources.requests.memory | string | `"64Mi"` |  |
 | controllerManager.manager.image.pullPolicy | string | `nil` |  |
-| controllerManager.manager.image.repository | string | `"newrelic/k8s-agents-operator"` |  |
-| controllerManager.manager.image.tag | string | `nil` |  |
+| controllerManager.manager.image.repository | string | `"ghcr.io/newrelic-experimental/k8s-agents-operator-windows"` |  |
+| controllerManager.manager.image.tag | string | `"edge"` |  |
 | controllerManager.manager.leaderElection | object | `{"enabled":true}` | Enable leader election mechanism for protecting against split brain if multiple operator pods/replicas are started |
 | controllerManager.manager.resources.requests.cpu | string | `"100m"` |  |
 | controllerManager.manager.resources.requests.memory | string | `"64Mi"` |  |
