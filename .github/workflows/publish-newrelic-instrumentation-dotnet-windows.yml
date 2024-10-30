@@ -91,6 +91,10 @@ jobs:
             --amend ghcr.io/${{ github.repository_owner }}/k8s-agents-operator-windows/newrelic-dotnet-init-windows-ltsc2019-amd64:${{ env.VERSION }} \
             --amend ghcr.io/${{ github.repository_owner }}/k8s-agents-operator-windows/newrelic-dotnet-init-windows-ltsc2022-amd64:${{ env.VERSION }}
 
+          docker manifest create ghcr.io/${{ github.repository_owner }}/k8s-agents-operator-windows/newrelic-dotnet-init-windows:latest \
+            --amend ghcr.io/${{ github.repository_owner }}/k8s-agents-operator-windows/newrelic-dotnet-init-windows-ltsc2019-amd64:${{ env.VERSION }} \
+            --amend ghcr.io/${{ github.repository_owner }}/k8s-agents-operator-windows/newrelic-dotnet-init-windows-ltsc2022-amd64:${{ env.VERSION }}
+
       - name: Docker Annotate
         run: |
           docker manifest annotate --os windows --arch amd64 \
@@ -104,3 +108,4 @@ jobs:
       - name: Docker Push Manifest
         run: |
           docker manifest push ghcr.io/${{ github.repository_owner }}/k8s-agents-operator-windows/newrelic-dotnet-init-windows:${{ env.VERSION }}
+          docker manifest push ghcr.io/${{ github.repository_owner }}/k8s-agents-operator-windows/newrelic-dotnet-init-windows:latest
