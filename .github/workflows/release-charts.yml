@@ -25,8 +25,8 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
-      - name: Add newrelic repository
-        run: helm repo add newrelic https://helm-charts.newrelic.com
+      - name: Add k8s-agents-operator-windows repository
+        run: helm repo add k8s-agents-operator-windows https://newrelic-experimental.github.io/k8s-agents-operator-windows/
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@a917fd15b20e8b64b94d9158ad54cd6345335584 # v1.6.0
