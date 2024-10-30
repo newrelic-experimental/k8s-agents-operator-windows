@@ -19,7 +19,7 @@ entries:
       url: https://github.com/danielstokes
     - name: andrew-lozoya
       url: https://github.com/andrew-lozoya
-    name: k8s-agents-operator
+    name: k8s-agents-operator-windows
     sources:
     - https://github.com/newrelic-experimental/k8s-agents-operator-windows
     type: application
