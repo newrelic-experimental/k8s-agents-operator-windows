@@ -66,7 +66,7 @@ metadata:
 spec:
   agent:
     language: dotnet-windows
-    image: ghrc.io/newrelic-experimental/newrelic-dotnet-windows-init:latest
+    image: ghcr.io/newrelic-experimental/k8s-agents-operator-windows/newrelic-dotnet-init-windows:latest
     # env: ...
 ```
 
