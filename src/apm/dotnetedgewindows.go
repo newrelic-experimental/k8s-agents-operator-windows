@@ -149,16 +149,10 @@ func (i DotnetEdgeWindowsInjector) Inject(ctx context.Context, inst v1alpha2.Ins
 			Name:    dotnetEdgeWindowsInitContainerName,
 			Image:   inst.Spec.Agent.Image,
 			Command: []string{"cmd", "/C", "xcopy C:\\instrumentation C:\\newrelic-instrumentation /E /I /H /Y"},
-			VolumeMounts: []corev1.VolumeMount{
-				{
-					Name:      volumeName,
-					MountPath: "C:\\newrelic-instrumentation",
-				},
-				{
-					Name:      "scripts-volume",
-					MountPath: "C:\\inetpub\\wwwroot\\Scripts",
-				},
-			},
+			VolumeMounts: []corev1.VolumeMount{{
+				Name:      volumeName,
+				MountPath: "C:\\newrelic-instrumentation",
+			}},
 		})
 	}
 
