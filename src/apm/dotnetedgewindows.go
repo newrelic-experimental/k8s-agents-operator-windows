@@ -130,23 +130,25 @@ func (i DotnetEdgeWindowsInjector) Inject(ctx context.Context, inst v1alpha2.Ins
 			MountPath: "C:\\newrelic-instrumentation",
 		})
 	}
-
 	// We just inject Volumes and init containers for the first processed container.
 	if isInitContainerMissing(pod, dotnetEdgeWindowsInitContainerName) {
 		if isPodVolumeMissing(pod, volumeName) {
+			// Correctly append two volumes to the Pod's Spec.Volumes
 			pod.Spec.Volumes = append(pod.Spec.Volumes,
 				corev1.Volume{
 					Name: volumeName,
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{},
-					}},
+					},
+				},
 				corev1.Volume{
 					Name: "scripts-volume",
 					VolumeSource: corev1.VolumeSource{
 						HostPath: &corev1.HostPathVolumeSource{
 							Path: "C:\\inetpub\\wwwroot\\Scripts",
 						},
-					}},
+					},
+				},
 			)
 		}
 
