@@ -84,13 +84,27 @@ func (i DotnetEdgeWindowsInjector) Inject(ctx context.Context, inst v1alpha2.Ins
 	container := &pod.Spec.Containers[firstContainer]
 
 	// check if CORECLR_NEWRELIC_HOME env var is already set in the container
-	if getIndexOfEnv(container.Env, envdotnetEdgeWindowsNewrelicHome) > -1 {
+	// if it is already set, then we assume that .NET newrelic-instrumentation is already configured for this container
+	if getIndexOfEnv(container.Env, envDotnetWindowsNewrelicHome) > -1 {
 		return pod, errors.New("CORECLR_NEWRELIC_HOME environment variable is already set in the container")
 	}
 
+	// check if CORECLR_NEWRELIC_HOME env var is already set in the .NET instrumentation spec
+	// if it is already set, then we assume that .NET newrelic-instrumentation is already configured for this container
+	if getIndexOfEnv(inst.Spec.Agent.Env, envDotnetWindowsNewrelicHome) > -1 {
+		return pod, errors.New("CORECLR_NEWRELIC_HOME environment variable is already set in the .NET instrumentation spec")
+	}
+
 	// check if NEWRELIC_HOME env var is already set in the container
-	if getIndexOfEnv(container.Env, envdotnetEdgeFrameworkWindowsNewrelicHome) > -1 {
+	// if it is already set, then we assume that .NET newrelic-instrumentation is already configured for this container
+	if getIndexOfEnv(container.Env, envDotnetFrameworkWindowsNewrelicHome) > -1 {
 		return pod, errors.New("NEWRELIC_HOME environment variable is already set in the container")
+	}
+
+	// check if NEWRELIC_HOME env var is already set in the .NET instrumentation spec
+	// if it is already set, then we assume that .NET newrelic-instrumentation is already configured for this container
+	if getIndexOfEnv(inst.Spec.Agent.Env, envDotnetFrameworkWindowsNewrelicHome) > -1 {
+		return pod, errors.New("NEWRELIC_HOME environment variable is already set in the .NET instrumentation spec")
 	}
 
 	// inject .NET instrumentation spec env vars.
@@ -135,23 +149,11 @@ func (i DotnetEdgeWindowsInjector) Inject(ctx context.Context, inst v1alpha2.Ins
 				},
 			})
 		}
-		if isPodVolumeMissing(pod, "scripts-volume") {
-			hostPathType := corev1.HostPathDirectory
-			pod.Spec.Volumes = append(pod.Spec.Volumes, corev1.Volume{
-				Name: "scripts-volume",
-				VolumeSource: corev1.VolumeSource{
-					HostPath: &corev1.HostPathVolumeSource{
-						Path: "C:\\inetpub\\wwwroot\\Scripts",
-						Type: &hostPathType,
-					},
-				},
-			})
-		}
 
 		pod.Spec.InitContainers = append(pod.Spec.InitContainers, corev1.Container{
 			Name:    dotnetEdgeWindowsInitContainerName,
 			Image:   inst.Spec.Agent.Image,
-			Command: []string{"cmd", "/C", "xcopy C:\\instrumentation C:\\newrelic-instrumentation /E /I /H /Y && xcopy C:\\instrumentation\\BeforeSetup.ps1 C:\\inetpub\\wwwroot\\Scripts\\BeforeSetup.ps1 /Y"},
+			Command: []string{"cmd", "/C", "xcopy C:\\instrumentation C:\\newrelic-instrumentation /E /I /H /Y"},
 			VolumeMounts: []corev1.VolumeMount{
 				{
 					Name:      volumeName,
