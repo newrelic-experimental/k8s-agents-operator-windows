@@ -25,21 +25,21 @@ import (
 )
 
 const (
-	//dotnetEdge Framework
-	envdotnetEdgeFrameworkWindowsClrEnableProfiling     = "COR_ENABLE_PROFILING"
-	envdotnetEdgeFrameworkWindowsClrProfiler            = "COR_PROFILER"
-	envdotnetEdgeFrameworkWindowsClrProfilerPath        = "COR_PROFILER_PATH"
-	envdotnetEdgeFrameworkWindowsNewrelicHome           = "NEWRELIC_HOME"
+	//DotNet Framework
+	envDotnetEdgeFrameworkWindowsClrEnableProfiling     = "COR_ENABLE_PROFILING"
+	envDotnetEdgeFrameworkWindowsClrProfiler            = "COR_PROFILER"
+	envDotnetEdgeFrameworkWindowsClrProfilerPath        = "COR_PROFILER_PATH"
+	envDotnetEdgeFrameworkWindowsNewrelicHome           = "NEWRELIC_HOME"
 	dotnetEdgeFrameworkWindowsClrEnableProfilingEnabled = "1"
 	dotnetEdgeFrameworkWindowsClrProfilerID             = "{71DA0A04-7777-4EC6-9643-7D28B46A8A41}"
 	dotnetEdgeFrameworkWindowsClrProfilerPath           = "C:\\newrelic-instrumentation\\netframework\\NewRelic.Profiler.dll"
 	dotnetEdgeFrameworkWindowsNewrelicHomePath          = "C:\\newrelic-instrumentation\\netframework"
 
-	//dotnetEdge Core
-	envdotnetEdgeWindowsClrEnableProfiling         = "CORECLR_ENABLE_PROFILING"
-	envdotnetEdgeWindowsClrProfiler                = "CORECLR_PROFILER"
-	envdotnetEdgeWindowsClrProfilerPath            = "CORECLR_PROFILER_PATH"
-	envdotnetEdgeWindowsNewrelicHome               = "CORECLR_NEWRELIC_HOME"
+	//DotNet Core
+	envDotnetEdgeWindowsClrEnableProfiling         = "CORECLR_ENABLE_PROFILING"
+	envDotnetEdgeWindowsClrProfiler                = "CORECLR_PROFILER"
+	envDotnetEdgeWindowsClrProfilerPath            = "CORECLR_PROFILER_PATH"
+	envDotnetEdgeWindowsNewrelicHome               = "CORECLR_NEWRELIC_HOME"
 	dotnetEdgeCoreWindowsClrEnableProfilingEnabled = "1"
 	dotnetEdgeCoreWindowsClrProfilerID             = "{36032161-FFC0-4B61-B559-F6C5D41BAE5A}"
 	dotnetEdgeCoreWindowsClrProfilerPath           = "C:\\newrelic-instrumentation\\netcore\\NewRelic.Profiler.dll"
@@ -58,7 +58,7 @@ type DotnetEdgeWindowsInjector struct {
 }
 
 func (i *DotnetEdgeWindowsInjector) Language() string {
-	return "dotnetEdge-windows"
+	return "dotnet-edge-windows"
 }
 
 func (i *DotnetEdgeWindowsInjector) acceptable(inst v1alpha2.Instrumentation, pod corev1.Pod) bool {
@@ -85,25 +85,25 @@ func (i DotnetEdgeWindowsInjector) Inject(ctx context.Context, inst v1alpha2.Ins
 
 	// check if CORECLR_NEWRELIC_HOME env var is already set in the container
 	// if it is already set, then we assume that .NET newrelic-instrumentation is already configured for this container
-	if getIndexOfEnv(container.Env, envDotnetWindowsNewrelicHome) > -1 {
+	if getIndexOfEnv(container.Env, envDotnetEdgeWindowsNewrelicHome) > -1 {
 		return pod, errors.New("CORECLR_NEWRELIC_HOME environment variable is already set in the container")
 	}
 
 	// check if CORECLR_NEWRELIC_HOME env var is already set in the .NET instrumentation spec
 	// if it is already set, then we assume that .NET newrelic-instrumentation is already configured for this container
-	if getIndexOfEnv(inst.Spec.Agent.Env, envDotnetWindowsNewrelicHome) > -1 {
+	if getIndexOfEnv(inst.Spec.Agent.Env, envDotnetEdgeWindowsNewrelicHome) > -1 {
 		return pod, errors.New("CORECLR_NEWRELIC_HOME environment variable is already set in the .NET instrumentation spec")
 	}
 
 	// check if NEWRELIC_HOME env var is already set in the container
 	// if it is already set, then we assume that .NET newrelic-instrumentation is already configured for this container
-	if getIndexOfEnv(container.Env, envDotnetFrameworkWindowsNewrelicHome) > -1 {
+	if getIndexOfEnv(container.Env, envDotnetEdgeFrameworkWindowsNewrelicHome) > -1 {
 		return pod, errors.New("NEWRELIC_HOME environment variable is already set in the container")
 	}
 
 	// check if NEWRELIC_HOME env var is already set in the .NET instrumentation spec
 	// if it is already set, then we assume that .NET newrelic-instrumentation is already configured for this container
-	if getIndexOfEnv(inst.Spec.Agent.Env, envDotnetFrameworkWindowsNewrelicHome) > -1 {
+	if getIndexOfEnv(inst.Spec.Agent.Env, envDotnetEdgeFrameworkWindowsNewrelicHome) > -1 {
 		return pod, errors.New("NEWRELIC_HOME environment variable is already set in the .NET instrumentation spec")
 	}
 
@@ -115,16 +115,15 @@ func (i DotnetEdgeWindowsInjector) Inject(ctx context.Context, inst v1alpha2.Ins
 		}
 	}
 
-	setEnvVar(container, envdotnetEdgeWindowsClrEnableProfiling, dotnetEdgeCoreWindowsClrEnableProfilingEnabled, false)
-	setEnvVar(container, envdotnetEdgeWindowsClrProfiler, dotnetEdgeCoreWindowsClrProfilerID, false)
-	setEnvVar(container, envdotnetEdgeWindowsClrProfilerPath, dotnetEdgeCoreWindowsClrProfilerPath, false)
-	setEnvVar(container, envdotnetEdgeWindowsNewrelicHome, dotnetEdgeCoreWindowsNewrelicHomePath, false)
-	setEnvVar(container, envdotnetEdgeFrameworkWindowsClrEnableProfiling, dotnetEdgeFrameworkWindowsClrEnableProfilingEnabled, false)
-	setEnvVar(container, envdotnetEdgeFrameworkWindowsClrProfiler, dotnetEdgeFrameworkWindowsClrProfilerID, false)
-	setEnvVar(container, envdotnetEdgeFrameworkWindowsClrProfilerPath, dotnetEdgeFrameworkWindowsClrProfilerPath, false)
-	setEnvVar(container, envdotnetEdgeFrameworkWindowsNewrelicHome, dotnetEdgeFrameworkWindowsNewrelicHomePath, false)
+	setEnvVar(container, envDotnetEdgeWindowsClrEnableProfiling, dotnetEdgeCoreWindowsClrEnableProfilingEnabled, false)
+	setEnvVar(container, envDotnetEdgeWindowsClrProfiler, dotnetEdgeCoreWindowsClrProfilerID, false)
+	setEnvVar(container, envDotnetEdgeWindowsClrProfilerPath, dotnetEdgeCoreWindowsClrProfilerPath, false)
+	setEnvVar(container, envDotnetEdgeWindowsNewrelicHome, dotnetEdgeCoreWindowsNewrelicHomePath, false)
+	setEnvVar(container, envDotnetEdgeFrameworkWindowsClrEnableProfiling, dotnetEdgeFrameworkWindowsClrEnableProfilingEnabled, false)
+	setEnvVar(container, envDotnetEdgeFrameworkWindowsClrProfiler, dotnetEdgeFrameworkWindowsClrProfilerID, false)
+	setEnvVar(container, envDotnetEdgeFrameworkWindowsClrProfilerPath, dotnetEdgeFrameworkWindowsClrProfilerPath, false)
+	setEnvVar(container, envDotnetEdgeFrameworkWindowsNewrelicHome, dotnetEdgeFrameworkWindowsNewrelicHomePath, false)
 
-	// Add mount point for Scripts directory
 	if isContainerVolumeMissing(container, volumeName) {
 		container.VolumeMounts = append(container.VolumeMounts, corev1.VolumeMount{
 			Name:      volumeName,
@@ -132,22 +131,23 @@ func (i DotnetEdgeWindowsInjector) Inject(ctx context.Context, inst v1alpha2.Ins
 		})
 	}
 
-	if isContainerVolumeMissing(container, "scripts-volume") {
-		container.VolumeMounts = append(container.VolumeMounts, corev1.VolumeMount{
-			Name:      "scripts-volume",
-			MountPath: "C:\\inetpub\\wwwroot\\Scripts",
-		})
-	}
-
-	// Update the InitContainer command to include the xcopy command for BeforeSetup.ps1
+	// We just inject Volumes and init containers for the first processed container.
 	if isInitContainerMissing(pod, dotnetEdgeWindowsInitContainerName) {
 		if isPodVolumeMissing(pod, volumeName) {
-			pod.Spec.Volumes = append(pod.Spec.Volumes, corev1.Volume{
-				Name: volumeName,
-				VolumeSource: corev1.VolumeSource{
-					EmptyDir: &corev1.EmptyDirVolumeSource{},
-				},
-			})
+			pod.Spec.Volumes = append(pod.Spec.Volumes,
+				corev1.Volume{
+					Name: volumeName,
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{},
+					}},
+				corev1.Volume{
+					Name: "scripts-volume",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "C:\\inetpub\\wwwroot\\Scripts",
+						},
+					}},
+			)
 		}
 
 		pod.Spec.InitContainers = append(pod.Spec.InitContainers, corev1.Container{
