@@ -142,12 +142,6 @@ func (i DotnetEdgeWindowsInjector) Inject(ctx context.Context, inst v1alpha2.Ins
 						EmptyDir: &corev1.EmptyDirVolumeSource{},
 					},
 				},
-				corev1.Volume{
-					Name: "scripts-volume",
-					VolumeSource: corev1.VolumeSource{
-						EmptyDir: &corev1.EmptyDirVolumeSource{},
-					},
-				},
 			)
 		}
 
