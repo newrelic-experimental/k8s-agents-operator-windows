@@ -8,6 +8,8 @@ ARG VERSION
 # Set the working directory
 WORKDIR C:\\instrumentation
 
+COPY ./BeforeSetup.ps1 BeforeSetup.ps1
+
 # Download and extract the New Relic .NET agent
 RUN curl.exe -L -o newrelic-agent.zip https://download.newrelic.com/dot_net_agent/latest_release/NewRelicDotNetAgent_%VERSION%_x64.zip\
     && tar.exe -xzf newrelic-agent.zip\
